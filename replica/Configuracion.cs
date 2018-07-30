@@ -5,19 +5,18 @@ namespace replica
 {
     public class Configuracion
     {
-        public readonly string sql;
-        public readonly int sleep;
-        public readonly string connection;
-        public readonly string name;
-        public readonly string mdb;
-        public readonly replica.sqltype sqlt;
-        public readonly bool run;
-        public readonly int limitd;
-        public readonly int limit;
-        public readonly int ports;
-        public readonly int portd;
-        public readonly string field;
+        public readonly string general_dir;
+        public readonly string database_connection;
+        public readonly replica.sqltype database_mdb;
+        public readonly int database_sleep;
+        public readonly string database_sql;
+        public readonly int search_port;
+        public readonly int search_limit;
+        public readonly string[] search_fields;
+        public readonly int sync_port;
+        public readonly int sync_sleep;
         private string error = "";
+        public Boolean run = false;
         public string GetError()
         {
             return error;
@@ -27,18 +26,16 @@ namespace replica
             try
             {
                 var data = new FileIniDataParser().ReadFile(dir);
-                this.sql = data["conf"]["sql"];
-                this.sleep = int.Parse(data["conf"]["sleep"]) * 60000;
-                this.connection = data["conf"]["connection"];
-                this.name = data["conf"]["name"];
-                this.limitd = int.Parse(data["conf"]["limitd"]);
-                this.limit = int.Parse(data["conf"]["limit"]);
-                this.field = data["conf"]["field"];
-                this.ports = int.Parse(data["conf"]["ports"]);
-                this.portd = int.Parse(data["conf"]["portd"]);
-                replica.sqltype sqlt;
-                Enum.TryParse(data["conf"]["mdb"], out sqlt);
-                this.sqlt = sqlt;
+                this.general_dir = data["general"]["dir"];
+                this.database_connection = data["database"]["connection"];
+                Enum.TryParse(data["database"]["mdb"], out database_mdb);
+                this.database_sleep = int.Parse(data["database"]["sleep"])* 60000;
+                this.database_sql = data["database"]["sql"];
+                this.search_limit = int.Parse(data["search"]["limit"]);
+                this.search_port = int.Parse(data["search"]["port"]) ;
+                this.search_fields = data["search"]["fields"].Split(',');
+                this.sync_port = int.Parse(data["sync"]["port"]) ;
+                this.sync_sleep = int.Parse(data["sync"]["sleep"]) * 60000;
                 run = true;
             }catch(Exception e)
             {

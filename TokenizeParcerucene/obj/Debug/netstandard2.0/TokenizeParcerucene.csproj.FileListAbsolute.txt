@@ -1,0 +1,9 @@
+C:\Users\rafit\Documents\GitHub\SRL\TokenizeParcerucene\obj\Debug\netstandard2.0\TokenizeParcerucene.csprojAssemblyReference.cache
+C:\Users\rafit\Documents\GitHub\SRL\TokenizeParcerucene\obj\Debug\netstandard2.0\TokenizeParcerucene.csproj.CoreCompileInputs.cache
+C:\Users\rafit\Documents\GitHub\SRL\TokenizeParcerucene\obj\Debug\netstandard2.0\TokenizeParcerucene.AssemblyInfoInputs.cache
+C:\Users\rafit\Documents\GitHub\SRL\TokenizeParcerucene\obj\Debug\netstandard2.0\TokenizeParcerucene.AssemblyInfo.cs
+C:\Users\rafit\Documents\GitHub\SRL\TokenizeParcerucene\bin\Debug\netstandard2.0\TokenizeParcerucene.deps.json
+C:\Users\rafit\Documents\GitHub\SRL\TokenizeParcerucene\bin\Debug\netstandard2.0\TokenizeParcerucene.dll
+C:\Users\rafit\Documents\GitHub\SRL\TokenizeParcerucene\bin\Debug\netstandard2.0\TokenizeParcerucene.pdb
+C:\Users\rafit\Documents\GitHub\SRL\TokenizeParcerucene\obj\Debug\netstandard2.0\TokenizeParcerucene.dll
+C:\Users\rafit\Documents\GitHub\SRL\TokenizeParcerucene\obj\Debug\netstandard2.0\TokenizeParcerucene.pdb

@@ -1,23 +1,20 @@
-﻿using Lucene.Net.Analysis;
-using Lucene.Net.Analysis.Standard;
+﻿using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using replica;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Sockets;
-using System.Net.WebSockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
-using static servicio.Service1;
+using TokenizeParcerucene;
 
 namespace servicio
 {
@@ -26,19 +23,17 @@ namespace servicio
         TcpClient clientSocket;
         public Configuracion cnf;
         public EventLog eventLog;
-
         public WSock(TcpClient inClientSocket)
-        {
+        {            
             this.clientSocket = inClientSocket;
             Thread ctThread = new Thread(SendHtTTP);
             ctThread.Start();
         }
-
         private void SendHtTTP()
         {
             NetworkStream stream = clientSocket.GetStream();
             string key="";
-            while (true)
+            while (stream.CanRead)
             {
                 while (!stream.DataAvailable) ;
                 Byte[] bytes = new Byte[clientSocket.Available];
@@ -53,53 +48,78 @@ namespace servicio
                             )
                         )
                     );
-                    Byte[] response = Encoding.UTF8.GetBytes(SetHeaders(key,"",101));
+                    Byte[] response = Encoding.UTF8.GetBytes(SetHeaders(key,""));
                     stream.Write(response, 0, response.Length);
                 }
                 else
                 {
-                    var docs = SearhLucene(GetDecodedData(bytes, bytes.Length));
-                    if (docs == null)
+                    if (bytes.Length > 4)
                     {
-                        string msg = JsonConvert.SerializeObject("Sin resultados");
-                        byte[] response = Encoding.UTF8.GetBytes(msg);
-                        stream.Write(response, 0, response.Length);
-                    }
-                    else
-                    {
-                        string msg = JsonConvert.SerializeObject(docs);
-                        byte[] response = Encoding.UTF8.GetBytes(msg);
-                        stream.Write(response, 0, response.Length);
+                        var docs = SearhLucene(GetDecodedData(bytes, out byte[] keys));
+                        bytes = Encoding.UTF8.GetBytes(docs);
+                        List<byte> Lbytes = new List<byte>();
+                        Lbytes.Add((byte)129);
+                        Lbytes.Add((byte)129);
+                        int Length = bytes.Length + 1;
+                        if (Length <= 125)
+                        {
+                            Lbytes.Add((byte)(Length));
+                            Lbytes.Add((byte)(Lbytes.Count));
+                        }
+                        else
+                        {
+                            if (Length >= 125 && Length <= 65535)
+                            {
+                                Lbytes.Add((byte)126);
+                                Lbytes.Add((byte)(Length >> 8));
+                                Lbytes.Add((byte)Length);
+                                Lbytes.Add((byte)Lbytes.Count);
+                            }
+                            else
+                            {
+                                Lbytes.Add((byte)127);
+                                Lbytes.Add((byte)(Length >> 56));
+                                Lbytes.Add((byte)(Length >> 48));
+                                Lbytes.Add((byte)(Length >> 40));
+                                Lbytes.Add((byte)(Length >> 32));
+                                Lbytes.Add((byte)(Length >> 24));
+                                Lbytes.Add((byte)(Length >> 16));
+                                Lbytes.Add((byte)(Length >> 8));
+                                Lbytes.Add((byte)Length);
+                                Lbytes.Add((byte)Lbytes.Count);
+                            }
+                        }
+                        Lbytes.RemoveAt(0);
+                        Lbytes.AddRange(bytes);
+                        stream.Write(Lbytes.ToArray(), 0, Lbytes.Count);
                     }
                 }
             }
         }
-        public string SetHeaders(string key,string data,int edo=200)
+        public string SetHeaders(string key, string data)
         {
-            return "HTTP/1.1 "+edo+" Switching Protocols" + Environment.NewLine
+            string line = "\n";
+            if (data != "")
+            {
+                line = "\r";
+            }
+            return "HTTP/1.1 101 Switching Protocols" + Environment.NewLine
                          + "Upgrade: websocket" + Environment.NewLine
                          + "Connection: Upgrade" + Environment.NewLine
                          + "Sec-WebSocket-Accept: " + key + Environment.NewLine
-                         //+"data"+data+Environment.NewLine
-                         + Environment.NewLine
+                         + "data:"+data+line+ Environment.NewLine
                          ;
         }
-        public byte[] GetEncodedData(string data)
+        public byte[] GetEncodedData(string data,byte[] key)
         {
-            bytes[] bytes=Encoding.UTF8.GetBytes(data);
-            byte b = bytes[1];
-            int dataLength = 0;
-            int totalLength = 0;
-            int keyIndex = 0;
-            if (b - 128 > 125)
+            byte[] toCrypt = Encoding.UTF8.GetBytes(data);
+            for (int i = 0; i < toCrypt.Length; i++)
             {
-                dataLength = b + 128;
-                keyIndex = 2;
-                totalLength = dataLength + 6;
+                toCrypt[i] = (byte)(toCrypt[i] ^ key[i%4]);
             }
-            return bytes;
+            return toCrypt;
         }
-        public string GetDecodedData(byte[] buffer, int length)
+        public string GetDecodedData(byte[] buffer,out byte[] key)
         {
             byte b = buffer[1];
             int dataLength = 0;
@@ -123,9 +143,9 @@ namespace servicio
                 keyIndex = 10;
                 totalLength = dataLength + 14;
             }
-            if (totalLength > length)
+            if (totalLength > buffer.Length)
                 throw new Exception("The buffer length is small than the data length");
-            byte[] key = new byte[] { buffer[keyIndex], buffer[keyIndex + 1], buffer[keyIndex + 2], buffer[keyIndex + 3] };
+            key = new byte[] { buffer[keyIndex], buffer[keyIndex + 1], buffer[keyIndex + 2], buffer[keyIndex + 3] };
             int dataIndex = keyIndex + 4;
             int count = 0;
             for (int i = dataIndex; i < totalLength; i++)
@@ -135,26 +155,59 @@ namespace servicio
             }
             return Encoding.UTF8.GetString(buffer, dataIndex, dataLength);
         }
-        public Document[] SearhLucene(string word)
+        /*private ObjJSON DocToOBJ(Document doc)
         {
-            Directory directory = FSDirectory.Open(new System.IO.DirectoryInfo(cnf.name));
-            Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
-            var parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, "nombres", analyzer);
-            Grammar g = new Grammar(word, cnf.field);
-            string _query = g.Build();
-            Query query = parser.Parse(_query);
-            var searcher = new IndexSearcher(directory, true);
-            TopDocs topDocs = searcher.Search(query, cnf.limitd);
-            List<Document> docs = new List<Document>(cnf.limit);
-            for (int i = 0, j = 0; i < topDocs.ScoreDocs.Length; i++, j++)
+            return new ObjJSON()
             {
-                if (j >= cnf.limit)
-                {
-                    break;
-                }
-                docs.Add(searcher.Doc(topDocs.ScoreDocs[i].Doc));
+                id=doc.Get("id"),
+                tittle= doc.Get("tittle"),
+                url= doc.Get("url"),
+                body= doc.Get("body")
+            };
+        }*/
+        public string SearhLucene(string word)
+        {
+            if (string.IsNullOrWhiteSpace(word))
+            {
+                return string.Empty;
             }
-            return docs.ToArray(); 
+            Directory directory = FSDirectory.Open(new System.IO.DirectoryInfo(cnf.general_dir));                        
+            IndexSearcher searcher = new IndexSearcher(directory, true);
+            composer c= new composer(word);
+            var a = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
+            var MulField = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, cnf.search_fields, a);
+            BooleanQuery.MaxClauseCount=c.terms.Count;
+            BooleanQuery BooleanBuild = new BooleanQuery();
+            //List<ObjJSON> docs = new List<ObjJSON>();
+            JArray joa = new JArray();
+            try
+            {
+                foreach (string t in c.terms)
+                {
+                    BooleanBuild.Add(MulField.Parse(t + "*"), Occur.SHOULD);
+                }
+                TopDocs topDocs = searcher.Search(BooleanBuild, searcher.MaxDoc);
+                //docs = new List<ObjJSON>(cnf.search_limit);
+                foreach(var item in topDocs.ScoreDocs)
+                {   
+                    if (joa.Count >= cnf.search_limit)
+                    {
+                        break;
+                    }
+                    JObject jo = new JObject();
+                    foreach (string field in cnf.search_fields)
+                    {
+                        jo.Add(field,searcher.Doc(item.Doc).Get(field));
+                    }
+                    joa.Add(jo);
+                    //docs.Add(DocToOBJ(searcher.Doc(topDocs.ScoreDocs[i].Doc)));
+                }
+            }catch(Exception ex)
+            {
+                eventLog.WriteEntry(string.Format("MSG:{0}\nTRACE:{1}", ex.Message,ex.StackTrace), EventLogEntryType.Error);
+            }
+            //return docs.ToArray(); 
+            return joa.ToString();
         }
     }
 }

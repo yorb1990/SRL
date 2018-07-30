@@ -1,6 +1,7 @@
 ﻿using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
+using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
@@ -84,20 +85,35 @@ namespace TestSearch
     {
         static void Main(string[] args)
         {
-            Configuracion cnf = new Configuracion(@"C:\Users\rafit\source\repos\SRL\servicio\bin\Debug\Configuration.ini");
-            Directory directory = FSDirectory.Open(new System.IO.DirectoryInfo(cnf.name));
+            Configuracion cnf = new Configuracion(@"C:\Users\rafit\Documents\Github\SRL\servicio\bin\Debug\Configuration.ini");
+            Directory directory = FSDirectory.Open(new System.IO.DirectoryInfo(cnf.general_dir));
             Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
-            var parser = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, "nombres", analyzer);
+            /*var parser = new PhraseQuery(Lucene.Net.Util.Version.LUCENE_30, "", analyzer);
             string word=Console.ReadLine();
-            Grammar g = new Grammar(word,cnf.field);
+            Grammar g = new Grammar(word, "tittle");
             string _query = g.Build();
-            Query query = parser.Parse(_query);            
+            Query query = parser.Parse("tittle: gesus* OR gésus* OR gehsus* OR ghesus* OR géhsus* OR ghésus* OR gesus* OR gesús* OR gesuhs* OR geshus* OR gesúhs* OR geshús* OR gesus* OR gezuz* OR gesus* OR jesus* OR yesus* ");            
             var searcher = new IndexSearcher(directory, true);
-            TopDocs topDocs = searcher.Search(query,cnf.limitd);
-            List<Document> docs = new List<Document>(cnf.limit);
+            TopDocs topDocs = searcher.Search(query,cnf.limitd);*/
+            var searcher = new IndexSearcher(directory, true);
+            BooleanQuery.MaxClauseCount = int.MaxValue;
+            var bq = new BooleanQuery();
+            var mf = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, new string[]{ "tittle" }, analyzer);
+            int k= 1;
+            foreach(string t in "gezuz* jes?s* jesus* yesus*".Split(' '))
+            {
+                bq.Add(mf.Parse(t), Occur.SHOULD);
+                if (k == 5)
+                {
+                    break;
+                }                
+                k++;
+            }
+            TopDocs topDocs = searcher.Search(bq,searcher.MaxDoc); 
+            List <Document> docs = new List<Document>(cnf.search_limit);
             for(int i=0,j=0; i< topDocs.ScoreDocs.Length;i++,j++)
             {
-                if (j >= cnf.limit)
+                if (j >= cnf.search_limit)
                 {
                     break;
                 }
