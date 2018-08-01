@@ -171,7 +171,7 @@ namespace servicio
             {
                 return string.Empty;
             }
-            Directory directory = FSDirectory.Open(new System.IO.DirectoryInfo(cnf.general_dir));                        
+            Directory directory = FSDirectory.Open(new System.IO.DirectoryInfo(cnf.general_name));                        
             IndexSearcher searcher = new IndexSearcher(directory, true);
             composer c= new composer(word);
             var a = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);

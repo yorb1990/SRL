@@ -13,7 +13,7 @@ namespace servicio
     public partial class Service1 : ServiceBase
     {
         Configuracion cnf;
-        const string INICONF = "Configuration.ini";
+        string INICONF = System.IO.Path.Combine(Environment.GetEnvironmentVariable("searcher"),"Configuration.ini");
         EventLog eventLog;
         public Service1()
         {
@@ -80,13 +80,13 @@ namespace servicio
             //serverSocket.Stop();
         }        
         public void TheadReplica(){
-            replica.LuceneReplicar lr = new replica.LuceneReplicar(cnf.database_connection, cnf.general_dir); ;            
+            replica.LuceneReplicar lr = new replica.LuceneReplicar(cnf.database_connection, cnf.general_name); ;            
             while (cnf.run)
             {
                 Thread.Sleep(cnf.database_sleep);
                 eventLog.WriteEntry("generando copia", EventLogEntryType.Information);
                 string error = "";
-                lr.reindex(cnf.general_dir);
+                lr.reindex(cnf.general_name);
                 if (!lr.Start(cnf.database_sql, cnf.database_mdb, ref error))
                 {
                     eventLog.WriteEntry(error, EventLogEntryType.Error);

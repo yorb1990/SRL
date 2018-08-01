@@ -5,7 +5,7 @@ namespace replica
 {
     public class Configuracion
     {
-        public readonly string general_dir;
+        public readonly string general_name;
         public readonly string database_connection;
         public readonly replica.sqltype database_mdb;
         public readonly int database_sleep;
@@ -26,7 +26,7 @@ namespace replica
             try
             {
                 var data = new FileIniDataParser().ReadFile(dir);
-                this.general_dir = data["general"]["dir"];
+                this.general_name = System.IO.Path.Combine(Environment.GetEnvironmentVariable("searcher"),data["general"]["dir"]);
                 this.database_connection = data["database"]["connection"];
                 Enum.TryParse(data["database"]["mdb"], out database_mdb);
                 this.database_sleep = int.Parse(data["database"]["sleep"])* 60000;
