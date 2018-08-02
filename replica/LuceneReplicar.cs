@@ -34,7 +34,6 @@ namespace replica
         {            
             using (var writer = new IndexWriter(directory, analyzer, IndexWriter.MaxFieldLength.UNLIMITED))
             {
-                //Task.Factory.StartNew(() => CreateIndex());        
                 IDbConnection con;
                 switch (sqlt)
                 {

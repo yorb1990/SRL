@@ -16,13 +16,13 @@ namespace TokenizeParcerucene
         }
         private void tokenizar(string origins)
         {
-            foreach (string origin in Regex.Split(origins, @" |,"))
+            foreach (string origin in Regex.Split(origins.Trim(), @" |,"))
             {
 
                 //build terms
                 Build(
                     //normali<e
-                    origin.Trim()
+                    origin
                     .Replace("  ", " ")
                     .Replace("*", " ")
                     .Replace("?", " ")

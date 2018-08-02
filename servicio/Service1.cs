@@ -1,22 +1,21 @@
 ﻿using replica;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.ServiceProcess;
 using System.Threading;
-using System.Text.RegularExpressions;
-using Lucene.Net.Search;
 
 namespace servicio
 {
     public partial class Service1 : ServiceBase
     {
         Configuracion cnf;
-        string INICONF = System.IO.Path.Combine(Environment.GetEnvironmentVariable("searcher"),"Configuration.ini");
+        string INICONF;
         EventLog eventLog;
         public Service1()
         {
+            string searcher = Environment.GetEnvironmentVariable("searcher");
+            INICONF = System.IO.Path.Combine(searcher??"", "Configuration.ini");
             InitializeComponent();
             if (!EventLog.SourceExists("searche"))
             {
@@ -29,7 +28,7 @@ namespace servicio
             }
             else
             {
-                eventLog.WriteEntry(string.Format("{1}/{0} no existe.",INICONF,System.Environment.CurrentDirectory), EventLogEntryType.Error);                
+                eventLog.WriteEntry(string.Format("{0} no existe.",INICONF), EventLogEntryType.Error);                
             }            
         }
         protected override void OnStart(string[] args)
@@ -84,25 +83,29 @@ namespace servicio
             while (cnf.run)
             {
                 Thread.Sleep(cnf.database_sleep);
-                eventLog.WriteEntry("generando copia", EventLogEntryType.Information);
+                eventLog.WriteEntry(string.Format("generando copia en '{0}' de '{1}'",cnf.general_name,cnf.database_sql), EventLogEntryType.Information);
                 string error = "";
                 lr.reindex(cnf.general_name);
-                if (!lr.Start(cnf.database_sql, cnf.database_mdb, ref error))
+                for (int i = 0; i < cnf.database_connection.Length; i++)
                 {
-                    eventLog.WriteEntry(error, EventLogEntryType.Error);
-                    break;
-                }
-                else
-                {
-                    if (error != "")
+                    if (!lr.Start(cnf.database_sql[i], cnf.database_mdb[i], ref error))
                     {
-                        eventLog.WriteEntry(error, EventLogEntryType.Warning);
+                        eventLog.WriteEntry(error, EventLogEntryType.Error);
+                        break;
+                    }
+                    else
+                    {
+                        if (error != "")
+                        {
+                            eventLog.WriteEntry(error, EventLogEntryType.Warning);
+                        }
                     }
                 }
             }
         }
         protected override void OnStop()
         {
+            eventLog.WriteEntry("sevicio detenido", EventLogEntryType.Warning);
         }
     }
 }

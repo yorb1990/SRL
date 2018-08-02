@@ -102,138 +102,6 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Lucene.Net.Contrib.Analyzers.dll" size="134144">
-      <assemblyIdentity name="Lucene.Net.Contrib.Analyzers" version="3.0.3.0" publicKeyToken="85089178B9AC3181" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>SBw3Q+n2zZyqqzqho2c2cM5cseRYfqm/OTiTlrjkFZM=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Lucene.Net.Contrib.Core.dll" size="16384">
-      <assemblyIdentity name="Lucene.Net.Contrib.Core" version="3.0.3.0" publicKeyToken="85089178B9AC3181" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>mCY4De6uzanYcbRJmc5ugrK65QX/T33McrhKzjQtSVY=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Lucene.Net.Contrib.FastVectorHighlighter.dll" size="27136">
-      <assemblyIdentity name="Lucene.Net.Contrib.FastVectorHighlighter" version="3.0.3.0" publicKeyToken="85089178B9AC3181" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>+htLE3vuIXnqFs8NaL9lCYZXmKOnS4WPCWEAHF0vwp4=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Lucene.Net.Contrib.Highlighter.dll" size="45056">
-      <assemblyIdentity name="Lucene.Net.Contrib.Highlighter" version="2.3.2.1" publicKeyToken="85089178B9AC3181" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>2HoHWkKviTmnQ5VdwaFT8MpOio140O4R07FQ1UVJXSE=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Lucene.Net.Contrib.Memory.dll" size="22016">
-      <assemblyIdentity name="Lucene.Net.Contrib.Memory" version="1.0.0.0" publicKeyToken="85089178B9AC3181" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>FnuFYKfD5rBnlswLjHwTdCysX0kZaCya2UuPTqzTinc=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Lucene.Net.Contrib.Queries.dll" size="26624">
-      <assemblyIdentity name="Lucene.Net.Contrib.Queries" version="3.0.3.0" publicKeyToken="85089178B9AC3181" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>S2aMKsrKuiWm+QTgGp3vyVM2Nwe9xCqmia9/q67m5eU=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Lucene.Net.Contrib.Regex.dll" size="9216">
-      <assemblyIdentity name="Lucene.Net.Contrib.Regex" version="3.0.3.0" publicKeyToken="85089178B9AC3181" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>5838R+ZfOL9u+mObTdTCd9/AoPXr2W9XWyea0W946WM=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Lucene.Net.Contrib.SimpleFacetedSearch.dll" size="13312">
-      <assemblyIdentity name="Lucene.Net.Contrib.SimpleFacetedSearch" version="3.0.3.0" publicKeyToken="85089178B9AC3181" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Id8az6XommJwg1W0NcSyfJJz9/UC7+E1+0gZTWzUr0M=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Lucene.Net.Contrib.Snowball.dll" size="176128">
-      <assemblyIdentity name="Lucene.Net.Contrib.Snowball" version="2.0.0.1" publicKeyToken="85089178B9AC3181" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>kByHBM7REaRwFk8/OMdezb4jztdJ+yODR0Lw58LNxeM=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Lucene.Net.Contrib.SpellChecker.dll" size="28672">
-      <assemblyIdentity name="Lucene.Net.Contrib.SpellChecker" version="3.0.3.0" publicKeyToken="85089178B9AC3181" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>vsj0ayDF7UF7MzfbgR4sIHscX9pe0PVhzabzuA2yP7Y=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Lucene.Net.Linq.dll" size="129536">
-      <assemblyIdentity name="Lucene.Net.Linq" version="3.6.0.125" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>7LZJh1oThnMnzw5c033+EPPniyflZHCRGzaKxjHq6G4=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MySql.Data.dll" size="688640">
       <assemblyIdentity name="MySql.Data" version="8.0.11.0" publicKeyToken="C5687FC88969C44D" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -258,18 +126,6 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Remotion.Linq.dll" size="207872">
-      <assemblyIdentity name="Remotion.Linq" version="1.13.183.0" publicKeyToken="FEE00910D6E5F53B" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>s8Fh8mdOZQ+G1Xw+J5bByD01U9ZKI2O3sv9wA+OnhlA=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="replica.dll" size="7168">
       <assemblyIdentity name="replica" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -277,19 +133,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>EWPFHf5LVLYeOUFuVC/ySEHgYkPnFECocCRe8QtU1Ns=</dsig:DigestValue>
+        <dsig:DigestValue>b5DmxIJ/gH4+e9KRS7q27f5bOiUB1D4ueZYtn6yDjDc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="searcher.exe" size="13240">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="searcher.exe" size="14264">
       <assemblyIdentity name="searcher" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ngdzmg5y0mEgTa92QE6VwUNbdpsHQ+2UEBv56t96itQ=</dsig:DigestValue>
+        <dsig:DigestValue>GH73nR4MNuBOFTPbFhfb4+OPs1X0eL9AhouBs2H9K7A=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -301,7 +157,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>X+UmDD3tR693ELH9c1sm5s1gbNLPFQDO1DGOw6Rl3rU=</dsig:DigestValue>
+        <dsig:DigestValue>hvWwQGaeV2iEQNkVU6YXd4aaMP5vRAcCFtDSRyD4t+Q=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

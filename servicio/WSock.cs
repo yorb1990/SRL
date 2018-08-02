@@ -35,12 +35,11 @@ namespace servicio
             string key="";
             while (stream.CanRead)
             {
-                while (!stream.DataAvailable) ;
-                Byte[] bytes = new Byte[clientSocket.Available];
+                Byte[] bytes = new Byte[1024];
                 stream.Read(bytes, 0, bytes.Length);
-                String data = Encoding.UTF8.GetString(bytes);                
-                if(new Regex("^GET").IsMatch(data))
-                {                    
+                String data = Encoding.UTF8.GetString(bytes);
+                if (new Regex("^GET").IsMatch(data))
+                {
                     key = Convert.ToBase64String(
                         SHA1.Create().ComputeHash(
                             Encoding.UTF8.GetBytes(
@@ -48,50 +47,58 @@ namespace servicio
                             )
                         )
                     );
-                    Byte[] response = Encoding.UTF8.GetBytes(SetHeaders(key,""));
+                    Byte[] response = Encoding.UTF8.GetBytes(SetHeaders(key, ""));
                     stream.Write(response, 0, response.Length);
                 }
                 else
                 {
-                    if (bytes.Length > 4)
-                    {
-                        var docs = SearhLucene(GetDecodedData(bytes, out byte[] keys));
-                        bytes = Encoding.UTF8.GetBytes(docs);
-                        List<byte> Lbytes = new List<byte>();
-                        Lbytes.Add((byte)129);
-                        Lbytes.Add((byte)129);
-                        int Length = bytes.Length + 1;
-                        if (Length <= 125)
+                    try { 
+                        if (bytes.Length > 4)
                         {
-                            Lbytes.Add((byte)(Length));
-                            Lbytes.Add((byte)(Lbytes.Count));
-                        }
-                        else
-                        {
-                            if (Length >= 125 && Length <= 65535)
+                            string OUTS = GetDecodedData(bytes, out byte[] keys);
+                            JObject obj = JObject.Parse(OUTS);
+                            var docs = SearhLucene((int)obj.SelectToken("point"), (string)obj.SelectToken("data"));
+                            bytes = Encoding.UTF8.GetBytes(docs);
+                            List<byte> Lbytes = new List<byte>();
+                            Lbytes.Add((byte)129);
+                            Lbytes.Add((byte)129);
+                            int Length = bytes.Length + 1;
+                            if (Length <= 125)
                             {
-                                Lbytes.Add((byte)126);
-                                Lbytes.Add((byte)(Length >> 8));
-                                Lbytes.Add((byte)Length);
-                                Lbytes.Add((byte)Lbytes.Count);
+                                Lbytes.Add((byte)(Length));
+                                Lbytes.Add((byte)(Lbytes.Count));
                             }
                             else
                             {
-                                Lbytes.Add((byte)127);
-                                Lbytes.Add((byte)(Length >> 56));
-                                Lbytes.Add((byte)(Length >> 48));
-                                Lbytes.Add((byte)(Length >> 40));
-                                Lbytes.Add((byte)(Length >> 32));
-                                Lbytes.Add((byte)(Length >> 24));
-                                Lbytes.Add((byte)(Length >> 16));
-                                Lbytes.Add((byte)(Length >> 8));
-                                Lbytes.Add((byte)Length);
-                                Lbytes.Add((byte)Lbytes.Count);
+                                if (Length >= 125 && Length <= 65535)
+                                {
+                                    Lbytes.Add((byte)126);
+                                    Lbytes.Add((byte)(Length >> 8));
+                                    Lbytes.Add((byte)Length);
+                                    Lbytes.Add((byte)Lbytes.Count);
+                                }
+                                else
+                                {
+                                    Lbytes.Add((byte)127);
+                                    Lbytes.Add((byte)(Length >> 56));
+                                    Lbytes.Add((byte)(Length >> 48));
+                                    Lbytes.Add((byte)(Length >> 40));
+                                    Lbytes.Add((byte)(Length >> 32));
+                                    Lbytes.Add((byte)(Length >> 24));
+                                    Lbytes.Add((byte)(Length >> 16));
+                                    Lbytes.Add((byte)(Length >> 8));
+                                    Lbytes.Add((byte)Length);
+                                    Lbytes.Add((byte)Lbytes.Count);
+                                }
                             }
+                            Lbytes.RemoveAt(0);
+                            Lbytes.AddRange(bytes);
+                            stream.Write(Lbytes.ToArray(), 0, Lbytes.Count);
                         }
-                        Lbytes.RemoveAt(0);
-                        Lbytes.AddRange(bytes);
-                        stream.Write(Lbytes.ToArray(), 0, Lbytes.Count);
+                    }
+                    catch (Newtonsoft.Json.JsonException ex)
+                    {
+                        clientSocket.Dispose();
                     }
                 }
             }
@@ -155,21 +162,18 @@ namespace servicio
             }
             return Encoding.UTF8.GetString(buffer, dataIndex, dataLength);
         }
-        /*private ObjJSON DocToOBJ(Document doc)
+        public string SearhLucene(int point,string word)
         {
-            return new ObjJSON()
+            JObject mjo = new JObject();
+            if (!(new Regex(@"^([0-9]|[a-z]|[A-Z]|[Á]|[Ó],|[Í]|[É]|[Ú]|[Ñ]|[á]|[ó]|[í]|[é]|[ú]|[ñ]|\s){2,50}$")).IsMatch(word))
             {
-                id=doc.Get("id"),
-                tittle= doc.Get("tittle"),
-                url= doc.Get("url"),
-                body= doc.Get("body")
-            };
-        }*/
-        public string SearhLucene(string word)
-        {
-            if (string.IsNullOrWhiteSpace(word))
+                mjo.Add("error", "datos de entrada invalidos, vuelve a intentarlo");
+                return mjo.ToString();
+            }
+            if (!System.IO.Directory.Exists(cnf.general_name))
             {
-                return string.Empty;
+                mjo.Add("error", "busqueda no disponible intentalo en unos minutos mas");
+                return mjo.ToString();
             }
             Directory directory = FSDirectory.Open(new System.IO.DirectoryInfo(cnf.general_name));                        
             IndexSearcher searcher = new IndexSearcher(directory, true);
@@ -177,8 +181,7 @@ namespace servicio
             var a = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
             var MulField = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, cnf.search_fields, a);
             BooleanQuery.MaxClauseCount=c.terms.Count;
-            BooleanQuery BooleanBuild = new BooleanQuery();
-            //List<ObjJSON> docs = new List<ObjJSON>();
+            BooleanQuery BooleanBuild = new BooleanQuery();            
             JArray joa = new JArray();
             try
             {
@@ -186,28 +189,30 @@ namespace servicio
                 {
                     BooleanBuild.Add(MulField.Parse(t + "*"), Occur.SHOULD);
                 }
-                TopDocs topDocs = searcher.Search(BooleanBuild, searcher.MaxDoc);
-                //docs = new List<ObjJSON>(cnf.search_limit);
-                foreach(var item in topDocs.ScoreDocs)
+                TopDocs topDocs = searcher.Search(BooleanBuild,searcher.MaxDoc);
+                mjo.Add("limit", topDocs.ScoreDocs.Length);
+                for (int i=point*cnf.search_limit;;i++)
                 {   
-                    if (joa.Count >= cnf.search_limit)
+                    if (i > cnf.search_limit*(point+1))
                     {
                         break;
                     }
                     JObject jo = new JObject();
-                    foreach (string field in cnf.search_fields)
+                    foreach (string field in cnf.search_objfields)
                     {
-                        jo.Add(field,searcher.Doc(item.Doc).Get(field));
+                        jo.Add(field,searcher.Doc(topDocs.ScoreDocs[i].Doc).Get(field));
                     }
                     joa.Add(jo);
-                    //docs.Add(DocToOBJ(searcher.Doc(topDocs.ScoreDocs[i].Doc)));
                 }
+                mjo.Add("point", point);
             }catch(Exception ex)
             {
+                mjo.Add("point", 0);
+                mjo.Add("error", "error al buscar intentalo de nuevo.");                
                 eventLog.WriteEntry(string.Format("MSG:{0}\nTRACE:{1}", ex.Message,ex.StackTrace), EventLogEntryType.Error);
             }
-            //return docs.ToArray(); 
-            return joa.ToString();
+            mjo["data"]=joa;
+            return mjo.ToString();
         }
     }
 }

@@ -85,3 +85,5 @@ C:\Users\rafit\Documents\GitHub\SRL\servicio\obj\Debug\searcher.exe.manifest
 C:\Users\rafit\Documents\GitHub\SRL\servicio\obj\Debug\searcher.application
 C:\Users\rafit\Documents\GitHub\SRL\servicio\obj\Debug\searcher.exe
 C:\Users\rafit\Documents\GitHub\SRL\servicio\obj\Debug\searcher.pdb
+C:\Users\rafit\Documents\GitHub\SRL\servicio\obj\Debug\servicio.ProjectInstaller.resources
+C:\Users\rafit\Documents\GitHub\SRL\servicio\obj\Debug\servicio.csproj.GenerateResource.cache
