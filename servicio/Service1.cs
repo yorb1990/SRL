@@ -45,23 +45,6 @@ namespace servicio
                 eventLog.WriteEntry(cnf.GetError(), EventLogEntryType.Error);
             }
         }
-        public void TheadTCPsync()
-        {
-            TcpListener serverSocket = new TcpListener(cnf.sync_port);
-            TcpClient clientSocket = default(TcpClient);
-            serverSocket.Start();
-            while (true)
-            {
-                clientSocket = serverSocket.AcceptTcpClient();
-                WSock client = new WSock(clientSocket)
-                {
-                    cnf = this.cnf,
-                    eventLog = this.eventLog
-                };
-            }
-            //clientSocket.Close();
-            //serverSocket.Stop()
-        }
         public void TheadTCPsearch()
         {
             TcpListener serverSocket = new TcpListener(cnf.search_port);
@@ -79,7 +62,7 @@ namespace servicio
             //serverSocket.Stop();
         }        
         public void TheadReplica(){
-            replica.LuceneReplicar lr = new replica.LuceneReplicar(cnf.database_connection, cnf.general_name); ;            
+            replica.LuceneReplicar lr = new replica.LuceneReplicar( cnf.general_name); ;
             while (cnf.run)
             {
                 Thread.Sleep(cnf.database_sleep);
@@ -88,7 +71,7 @@ namespace servicio
                 lr.reindex(cnf.general_name);
                 for (int i = 0; i < cnf.database_connection.Length; i++)
                 {
-                    if (!lr.Start(cnf.database_sql[i], cnf.database_mdb[i], ref error))
+                    if (!lr.Start(cnf.database_connection[i],cnf.database_sql[i], cnf.database_mdb[i], ref error))
                     {
                         eventLog.WriteEntry(error, EventLogEntryType.Error);
                         break;

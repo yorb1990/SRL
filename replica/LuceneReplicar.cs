@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System;
 using System.Data;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace replica
 {
@@ -15,11 +16,8 @@ namespace replica
     {
         public Directory directory;
         public Analyzer analyzer;
-        private readonly string cons;
-        public LuceneReplicar(string cons, string name)
+        public LuceneReplicar(string name)
         {
-            reindex(name);
-            this.cons = cons;
             analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
         }
         public void reindex(string name)
@@ -30,8 +28,32 @@ namespace replica
             }
             directory = FSDirectory.Open(name);
         }
-        public bool Start(string SQLquery,sqltype sqlt,ref string error)
-        {            
+        public bool Start(string cons,string SQLquery,sqltype sqlt,ref string error)
+        {
+            int startvar = SQLquery.IndexOf('$');
+            if (startvar > 0)
+            {
+                string name = "",value="";
+                var r = new Regex(@"[A-Z]|[a-z]|[0-9]");
+                for (int i=startvar+1;i< SQLquery.Length;i++)
+                {
+                    if (!r.IsMatch(SQLquery[i].ToString()))
+                    {
+                        break;
+                    }
+                    name += SQLquery[i];
+                }
+                startvar = cons.IndexOf(name);
+                for (int i = startvar + +1+name.Length; i < cons.Length; i++)
+                {
+                    if (cons[i]==';')
+                    {
+                        break;
+                    }
+                    value += cons[i];
+                }
+                SQLquery=SQLquery.Replace("$" + name, value);
+            }
             using (var writer = new IndexWriter(directory, analyzer, IndexWriter.MaxFieldLength.UNLIMITED))
             {
                 IDbConnection con;
