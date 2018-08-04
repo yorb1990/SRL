@@ -22,8 +22,7 @@ namespace CreateDatabase
             replica.LuceneReplicar lr = new LuceneReplicar(cnf.general_name); ;
             if (cnf.run)
             {
-                string error = "";
-                lr.reindex(cnf.general_name);                
+                string error = "";          
                 for (int i = 0; i < cnf.database_connection.Length; i++)
                 {
                     Console.WriteLine("{1} de {2} : datos de conexion {0} ", cnf.database_connection[i],i,cnf.database_connection.Length);                    

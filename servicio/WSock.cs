@@ -223,9 +223,9 @@ namespace servicio
                         break;
                     }
                     JObject jo = new JObject();
-                    foreach (string field in cnf.search_objfields)
+                    foreach (string _field in cnf.search_objfields)
                     {
-                        jo.Add(field,searcher.Doc(topDocs.ScoreDocs[i].Doc).Get(field));
+                        jo.Add(_field,searcher.Doc(topDocs.ScoreDocs[i].Doc).Get(_field));
                     }
                     joa.Add(jo);
                 }

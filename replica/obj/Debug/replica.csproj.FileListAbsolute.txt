@@ -32,7 +32,3 @@ C:/Users/rafit/Documents/GitHub/SRL/replica/obj/Debug/replica.csproj.CoreCompile
 C:/Users/rafit/Documents/GitHub/SRL/replica/obj/Debug/replica.csproj.CopyComplete
 C:/Users/rafit/Documents/GitHub/SRL/replica/obj/Debug/replica.dll
 C:/Users/rafit/Documents/GitHub/SRL/replica/obj/Debug/replica.pdb
-/home/yorb1990/Projects/yorb1990/SRL/replica/obj/Debug/replica.csprojResolveAssemblyReference.cache
-/home/yorb1990/Projects/yorb1990/SRL/replica/obj/Debug/replica.csproj.CoreCompileInputs.cache
-/home/yorb1990/Projects/yorb1990/SRL/replica/obj/Debug/replica.dll
-/home/yorb1990/Projects/yorb1990/SRL/replica/obj/Debug/replica.pdb

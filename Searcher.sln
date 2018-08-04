@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenizeParcerucene", "Toke
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateDatabase", "CreateDatabase\CreateDatabase.csproj", "{D678D326-62C1-4427-B7CB-1BF4308B2D26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testunit", "testunit\testunit.csproj", "{855C95DE-2EE1-4C63-BD26-BA47870298A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D678D326-62C1-4427-B7CB-1BF4308B2D26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D678D326-62C1-4427-B7CB-1BF4308B2D26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D678D326-62C1-4427-B7CB-1BF4308B2D26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{855C95DE-2EE1-4C63-BD26-BA47870298A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{855C95DE-2EE1-4C63-BD26-BA47870298A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{855C95DE-2EE1-4C63-BD26-BA47870298A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{855C95DE-2EE1-4C63-BD26-BA47870298A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

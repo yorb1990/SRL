@@ -18,7 +18,7 @@ namespace TokenizeParcerucene
         {
             foreach (string origin in Regex.Split(origins.Trim(), @" |,"))
             {
-				if (origin.StartsWith('\''))
+				if (origin.StartsWith("'"))
 				{
 					terms.Add(origin);
 				}

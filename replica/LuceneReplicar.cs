@@ -7,27 +7,25 @@ using MySql.Data.MySqlClient;
 using System.Data.SqlClient;
 using System;
 using System.Data;
-using System.Threading;
 using System.Text.RegularExpressions;
 
 namespace replica
 {
+	
 	public class LuceneReplicar : IDisposable
     {
-        public Directory directory;
-        public Analyzer analyzer;
+		string dir;
         public LuceneReplicar(string name)
         {
-            analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
-			indexp1();
+			this.dir = name;
+			//indexp1();
         }
 		private void indexp1()
         {
-            if (System.IO.Directory.Exists(name))
+            if (System.IO.Directory.Exists(dir))
             {
-				System.IO.Directory.Move(name, name + "_temp");
-            }
-            directory = FSDirectory.Open(name);
+				System.IO.Directory.Move(dir, dir + "_temp");
+            }            
         }
         public bool Start(string cons,string SQLquery,sqltype sqlt,ref string error)
         {
@@ -55,7 +53,7 @@ namespace replica
                 }
                 SQLquery=SQLquery.Replace("$" + name, value);
             }
-            using (var writer = new IndexWriter(directory, analyzer, IndexWriter.MaxFieldLength.UNLIMITED))
+			using (var writer = new IndexWriter(FSDirectory.Open(dir+"_temp"), new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30), IndexWriter.MaxFieldLength.UNLIMITED))
             {
                 IDbConnection con;
                 switch (sqlt)
@@ -79,8 +77,6 @@ namespace replica
                     cmd.Connection.Open();
                     using (var rd = cmd.ExecuteReader())
                     {
-                        //if (rd.HasRows)
-                        //{
                         while (rd.Read())
                         {
                             Document doc = new Document();
@@ -93,12 +89,6 @@ namespace replica
                         }
                         writer.Optimize();
                         writer.Commit();
-                        //writer.Dispose();
-                        //}
-                        //else
-                        //{
-                        //error = "query sin datos de retorno";
-                        //}
                     }
                 }
                 catch (Exception ex)
@@ -112,11 +102,11 @@ namespace replica
 
 		public void Dispose()
 		{
-			if (System.IO.Directory.Exists(name))
+			if (System.IO.Directory.Exists(dir+"_temp"))
             {
-                System.IO.Directory.Move(name+"_temp", name + "_" + DateTime.Now.ToString("yyyy-MM-dd HH mm ss"));
-            }
-            directory = FSDirectory.Open(name);
+				System.IO.Directory.Move(dir, dir + "_" + DateTime.Now.ToString("yyyy-MM-dd HH mm ss"));
+				System.IO.Directory.Move(dir+"_temp",dir);
+            }            
 		}
 	}
 }

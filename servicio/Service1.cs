@@ -70,7 +70,6 @@ namespace servicio
 					Thread.Sleep(cnf.database_sleep);
 					eventLog.WriteEntry(string.Format("generando copia en '{0}' de '{1}'", cnf.general_name, cnf.database_sql), EventLogEntryType.Information);
 					string error = "";
-					lr.reindex(cnf.general_name);
 					for (int i = 0; i < cnf.database_connection.Length; i++)
 					{
 						if (!lr.Start(cnf.database_connection[i], cnf.database_sql[i], cnf.database_mdb[i], ref error))
