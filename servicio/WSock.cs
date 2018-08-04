@@ -55,9 +55,28 @@ namespace servicio
                     try { 
                         if (bytes.Length > 4)
                         {
-                            string OUTS = GetDecodedData(bytes, out byte[] keys);
-                            JObject obj = JObject.Parse(OUTS);
-                            var docs = SearhLucene((int)obj.SelectToken("point"), (string)obj.SelectToken("data"));
+							JObject obj = JObject.Parse(GetDecodedData(bytes, out byte[] keys));
+							string docs;
+							if (new Regex(@"^([a-z]|[A-Z]|\d)*:").IsMatch((string)obj.SelectToken("data")))
+							{
+								string token = (string)obj.SelectToken("data");
+								string name = "";
+								var r = new Regex(@"[A-Z]|[a-z]|[0-9]");
+								for (int i = token.IndexOf(':') + 1; i < token.Length; i++)
+								{
+									if (!r.IsMatch(token[i].ToString()))
+									{
+										break;
+									}
+									name += token[i];
+								}
+								string value = token.Split(':')[1];
+								docs = SearhLucene((int)obj.SelectToken("point"), value, name);                        
+							}
+							else
+							{
+								docs = SearhLucene((int)obj.SelectToken("point"), (string)obj.SelectToken("data"));
+							}
                             bytes = Encoding.UTF8.GetBytes(docs);
                             List<byte> Lbytes = new List<byte>();
                             Lbytes.Add((byte)129);
@@ -162,24 +181,30 @@ namespace servicio
             }
             return Encoding.UTF8.GetString(buffer, dataIndex, dataLength);
         }
-        public string SearhLucene(int point,string word)
-        {
-            JObject mjo = new JObject();
-            if (!(new Regex(@"^([0-9]|[a-z]|[A-Z]|[Á]|[Ó],|[Í]|[É]|[Ú]|[Ñ]|[á]|[ó]|[í]|[é]|[ú]|[ñ]|\s){2,50}$")).IsMatch(word))
-            {
-                mjo.Add("error", "datos de entrada invalidos, vuelve a intentarlo");
-                return mjo.ToString();
-            }
-            if (!System.IO.Directory.Exists(cnf.general_name))
-            {
-                mjo.Add("error", "busqueda no disponible intentalo en unos minutos mas");
-                return mjo.ToString();
-            }
-            Directory directory = FSDirectory.Open(new System.IO.DirectoryInfo(cnf.general_name));                        
-            IndexSearcher searcher = new IndexSearcher(directory, true);
-            composer c= new composer(word);
-            var a = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
-            var MulField = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, cnf.search_fields, a);
+		public string SearhLucene(int point, string word, string field = "")
+		{
+			JObject mjo = new JObject();
+			if (!(new Regex(@"^([']|[0-9]|[a-z]|[A-Z]|[Á]|[Ó],|[Í]|[É]|[Ú]|[Ñ]|[á]|[ó]|[í]|[é]|[ú]|[ñ]|\s){2,50}$")).IsMatch(word))
+			{
+				mjo.Add("error", "datos de entrada invalidos, vuelve a intentarlo");
+				return mjo.ToString();
+			}
+			if (!System.IO.Directory.Exists(cnf.general_name))
+			{
+				mjo.Add("error", "busqueda no disponible intentalo en unos minutos mas");
+				return mjo.ToString();
+			}
+			Directory directory = FSDirectory.Open(new System.IO.DirectoryInfo(cnf.general_name));
+			IndexSearcher searcher = new IndexSearcher(directory, true);
+			composer c = new composer(word);
+			var a = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
+			MultiFieldQueryParser MulField;
+			if (field.Length == 0)
+			{
+				MulField = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, cnf.search_fields, a);
+			}else{
+				MulField = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, new string[]{field}, a);
+			}
             BooleanQuery.MaxClauseCount=c.terms.Count;
             BooleanQuery BooleanBuild = new BooleanQuery();            
             JArray joa = new JArray();

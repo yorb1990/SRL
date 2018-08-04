@@ -12,19 +12,20 @@ using System.Text.RegularExpressions;
 
 namespace replica
 {
-    public class LuceneReplicar 
+	public class LuceneReplicar : IDisposable
     {
         public Directory directory;
         public Analyzer analyzer;
         public LuceneReplicar(string name)
         {
             analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30);
+			indexp1();
         }
-        public void reindex(string name)
+		private void indexp1()
         {
             if (System.IO.Directory.Exists(name))
             {
-                System.IO.Directory.Move(name, name + "_" + DateTime.Now.ToString("yyyy-MM-dd HH mm ss"));
+				System.IO.Directory.Move(name, name + "_temp");
             }
             directory = FSDirectory.Open(name);
         }
@@ -108,5 +109,14 @@ namespace replica
             }
             return true;
         }
-    }
+
+		public void Dispose()
+		{
+			if (System.IO.Directory.Exists(name))
+            {
+                System.IO.Directory.Move(name+"_temp", name + "_" + DateTime.Now.ToString("yyyy-MM-dd HH mm ss"));
+            }
+            directory = FSDirectory.Open(name);
+		}
+	}
 }

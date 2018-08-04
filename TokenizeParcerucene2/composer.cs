@@ -8,7 +8,7 @@ namespace TokenizeParcerucene
     {
         public List<string> terms = new List<string>();
         private string[] symbols = new string[] {
-            "a|á","e|é","i|í|y","o|ó","u|ú","q|k","s|z|c","v|b","m|n|ñ","j|y|g","h|[\\?]"
+            "a|á","e|é","i|í|y|1","o|ó|0","u|ú","q|k","s|z|c","v|b","m|n|ñ","j|y|g","h|[\\?]"
         };
         public composer(string origin)
         {
@@ -18,16 +18,22 @@ namespace TokenizeParcerucene
         {
             foreach (string origin in Regex.Split(origins.Trim(), @" |,"))
             {
-
-                //build terms
-                Build(
-                    //normali<e
-                    origin
-                    .Replace("  ", " ")
-                    .Replace("*", " ")
-                    .Replace("?", " ")
-                    .ToLower()
-                    );
+				if (origin.StartsWith('\''))
+				{
+					terms.Add(origin);
+				}
+				else
+				{
+					//build terms
+					Build(
+						//normali<e
+						origin
+						.Replace("  ", " ")
+						.Replace("*", " ")
+						.Replace("?", " ")
+						.ToLower()
+						);
+				}
                 //DoubleN();
             }
         }

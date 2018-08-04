@@ -62,28 +62,31 @@ namespace servicio
             //serverSocket.Stop();
         }        
         public void TheadReplica(){
-            replica.LuceneReplicar lr = new replica.LuceneReplicar( cnf.general_name); ;
-            while (cnf.run)
-            {
-                Thread.Sleep(cnf.database_sleep);
-                eventLog.WriteEntry(string.Format("generando copia en '{0}' de '{1}'",cnf.general_name,cnf.database_sql), EventLogEntryType.Information);
-                string error = "";
-                lr.reindex(cnf.general_name);
-                for (int i = 0; i < cnf.database_connection.Length; i++)
-                {
-                    if (!lr.Start(cnf.database_connection[i],cnf.database_sql[i], cnf.database_mdb[i], ref error))
-                    {
-                        eventLog.WriteEntry(error, EventLogEntryType.Error);
-                        break;
-                    }
-                    else
-                    {
-                        if (error != "")
-                        {
-                            eventLog.WriteEntry(error, EventLogEntryType.Warning);
-                        }
-                    }
-                }
+
+			while (cnf.run)
+			{
+				using (replica.LuceneReplicar lr = new replica.LuceneReplicar(cnf.general_name))
+				{
+					Thread.Sleep(cnf.database_sleep);
+					eventLog.WriteEntry(string.Format("generando copia en '{0}' de '{1}'", cnf.general_name, cnf.database_sql), EventLogEntryType.Information);
+					string error = "";
+					lr.reindex(cnf.general_name);
+					for (int i = 0; i < cnf.database_connection.Length; i++)
+					{
+						if (!lr.Start(cnf.database_connection[i], cnf.database_sql[i], cnf.database_mdb[i], ref error))
+						{
+							eventLog.WriteEntry(error, EventLogEntryType.Error);
+							break;
+						}
+						else
+						{
+							if (error != "")
+							{
+								eventLog.WriteEntry(error, EventLogEntryType.Warning);
+							}
+						}
+					}
+				}
             }
         }
         protected override void OnStop()
