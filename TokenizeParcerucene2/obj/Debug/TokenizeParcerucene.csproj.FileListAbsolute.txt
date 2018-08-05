@@ -4,3 +4,9 @@ C:/Users/rafit/Documents/GitHub/SRL/TokenizeParcerucene2/obj/Debug/TokenizeParce
 C:/Users/rafit/Documents/GitHub/SRL/TokenizeParcerucene2/obj/Debug/TokenizeParcerucene.csproj.CoreCompileInputs.cache
 C:/Users/rafit/Documents/GitHub/SRL/TokenizeParcerucene2/obj/Debug/TokenizeParcerucene.dll
 C:/Users/rafit/Documents/GitHub/SRL/TokenizeParcerucene2/obj/Debug/TokenizeParcerucene.pdb
+/home/yorb1990/Projects/yorb1990/SRL/TokenizeParcerucene2/bin/Debug/TokenizeParcerucene.dll
+/home/yorb1990/Projects/yorb1990/SRL/TokenizeParcerucene2/bin/Debug/TokenizeParcerucene.pdb
+/home/yorb1990/Projects/yorb1990/SRL/TokenizeParcerucene2/obj/Debug/TokenizeParcerucene.csprojResolveAssemblyReference.cache
+/home/yorb1990/Projects/yorb1990/SRL/TokenizeParcerucene2/obj/Debug/TokenizeParcerucene.csproj.CoreCompileInputs.cache
+/home/yorb1990/Projects/yorb1990/SRL/TokenizeParcerucene2/obj/Debug/TokenizeParcerucene.dll
+/home/yorb1990/Projects/yorb1990/SRL/TokenizeParcerucene2/obj/Debug/TokenizeParcerucene.pdb

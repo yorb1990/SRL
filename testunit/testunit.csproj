@@ -31,7 +31,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Test.cs" />
+    <Compile Include="StringTransformVariable.cs" />
+    <Compile Include="ProximityTransformLucene.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

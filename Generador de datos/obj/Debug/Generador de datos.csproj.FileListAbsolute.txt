@@ -10,3 +10,13 @@ C:/Users/rafit/Documents/GitHub/SRL/Generador de datos/obj/Debug/Generador de da
 C:/Users/rafit/Documents/GitHub/SRL/Generador de datos/obj/Debug/Generador de datos.csproj.CopyComplete
 C:/Users/rafit/Documents/GitHub/SRL/Generador de datos/obj/Debug/Generador de datos.exe
 C:/Users/rafit/Documents/GitHub/SRL/Generador de datos/obj/Debug/Generador de datos.pdb
+/home/yorb1990/Projects/yorb1990/SRL/Generador de datos/bin/Debug/Generador de datos.exe.config
+/home/yorb1990/Projects/yorb1990/SRL/Generador de datos/bin/Debug/Generador de datos.exe
+/home/yorb1990/Projects/yorb1990/SRL/Generador de datos/bin/Debug/Generador de datos.pdb
+/home/yorb1990/Projects/yorb1990/SRL/Generador de datos/bin/Debug/Google.Protobuf.dll
+/home/yorb1990/Projects/yorb1990/SRL/Generador de datos/bin/Debug/MySql.Data.dll
+/home/yorb1990/Projects/yorb1990/SRL/Generador de datos/bin/Debug/Google.Protobuf.xml
+/home/yorb1990/Projects/yorb1990/SRL/Generador de datos/bin/Debug/MySql.Data.xml
+/home/yorb1990/Projects/yorb1990/SRL/Generador de datos/obj/Debug/Generador de datos.csproj.CoreCompileInputs.cache
+/home/yorb1990/Projects/yorb1990/SRL/Generador de datos/obj/Debug/Generador de datos.exe
+/home/yorb1990/Projects/yorb1990/SRL/Generador de datos/obj/Debug/Generador de datos.pdb
