@@ -40,7 +40,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TokenizeParcerucene2\TokenizeParcerucene.csproj">
       <Project>{32948C12-7A34-4C5E-B59F-3598B2C559CC}</Project>
-      <Name>TokenizeParcerucene</Name>
+      <Name>TokenizeParcentLucene</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

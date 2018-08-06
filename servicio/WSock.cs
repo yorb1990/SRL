@@ -1,24 +1,21 @@
 ﻿using Lucene.Net.Analysis.Standard;
-using Lucene.Net.Documents;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using replica;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using TokenizeParcerucene;
+using TokenizeParceLucene;
 
 namespace servicio
 {
-    public class WSock
+	public class WSock
     {
         TcpClient clientSocket;
         public Configuracion cnf;
@@ -55,7 +52,7 @@ namespace servicio
                     try { 
                         if (bytes.Length > 4)
                         {
-							JObject obj = JObject.Parse(GetDecodedData(bytes, out byte[] keys));
+							JObject obj = JObject.Parse(VarTransform.reciveMASKXOR(bytes));
 							string docs;
 							if (new Regex(@"^([a-z]|[A-Z]|\d)*:").IsMatch((string)obj.SelectToken("data")))
 							{
@@ -77,42 +74,8 @@ namespace servicio
 							{
 								docs = SearhLucene((int)obj.SelectToken("point"), (string)obj.SelectToken("data"));
 							}
-                            bytes = Encoding.UTF8.GetBytes(docs);
-                            List<byte> Lbytes = new List<byte>();
-                            Lbytes.Add((byte)129);
-                            Lbytes.Add((byte)129);
-                            int Length = bytes.Length + 1;
-                            if (Length <= 125)
-                            {
-                                Lbytes.Add((byte)(Length));
-                                Lbytes.Add((byte)(Lbytes.Count));
-                            }
-                            else
-                            {
-                                if (Length >= 125 && Length <= 65535)
-                                {
-                                    Lbytes.Add((byte)126);
-                                    Lbytes.Add((byte)(Length >> 8));
-                                    Lbytes.Add((byte)Length);
-                                    Lbytes.Add((byte)Lbytes.Count);
-                                }
-                                else
-                                {
-                                    Lbytes.Add((byte)127);
-                                    Lbytes.Add((byte)(Length >> 56));
-                                    Lbytes.Add((byte)(Length >> 48));
-                                    Lbytes.Add((byte)(Length >> 40));
-                                    Lbytes.Add((byte)(Length >> 32));
-                                    Lbytes.Add((byte)(Length >> 24));
-                                    Lbytes.Add((byte)(Length >> 16));
-                                    Lbytes.Add((byte)(Length >> 8));
-                                    Lbytes.Add((byte)Length);
-                                    Lbytes.Add((byte)Lbytes.Count);
-                                }
-                            }
-                            Lbytes.RemoveAt(0);
-                            Lbytes.AddRange(bytes);
-                            stream.Write(Lbytes.ToArray(), 0, Lbytes.Count);
+							bytes = VarTransform.sendMaskXOR(docs);
+							stream.Write(bytes, 0, bytes.Length);
                         }
                     }
                     catch (Newtonsoft.Json.JsonException ex)
@@ -144,42 +107,6 @@ namespace servicio
                 toCrypt[i] = (byte)(toCrypt[i] ^ key[i%4]);
             }
             return toCrypt;
-        }
-        public string GetDecodedData(byte[] buffer,out byte[] key)
-        {
-            byte b = buffer[1];
-            int dataLength = 0;
-            int totalLength = 0;
-            int keyIndex = 0;
-            if (b - 128 <= 125)
-            {
-                dataLength = b - 128;
-                keyIndex = 2;
-                totalLength = dataLength + 6;
-            }
-            if (b - 128 == 126)
-            {
-                dataLength = BitConverter.ToInt16(new byte[] { buffer[3], buffer[2] }, 0);
-                keyIndex = 4;
-                totalLength = dataLength + 8;
-            }
-            if (b - 128 == 127)
-            {
-                dataLength = (int)BitConverter.ToInt64(new byte[] { buffer[9], buffer[8], buffer[7], buffer[6], buffer[5], buffer[4], buffer[3], buffer[2] }, 0);
-                keyIndex = 10;
-                totalLength = dataLength + 14;
-            }
-            if (totalLength > buffer.Length)
-                throw new Exception("The buffer length is small than the data length");
-            key = new byte[] { buffer[keyIndex], buffer[keyIndex + 1], buffer[keyIndex + 2], buffer[keyIndex + 3] };
-            int dataIndex = keyIndex + 4;
-            int count = 0;
-            for (int i = dataIndex; i < totalLength; i++)
-            {
-                buffer[i] = (byte)(buffer[i] ^ key[count % 4]);
-                count++;
-            }
-            return Encoding.UTF8.GetString(buffer, dataIndex, dataLength);
         }
 		public string SearhLucene(int point, string word, string field = "")
 		{

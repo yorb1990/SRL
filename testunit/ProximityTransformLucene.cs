@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
+
+
 namespace testunit
 {
     [TestFixture()]
@@ -8,13 +10,13 @@ namespace testunit
         [Test()]
         public void Simple()
         {
-			TokenizeParcerucene.composer c = new TokenizeParcerucene.composer("ana");
+			composer c = new TokenizeParcerucene.composer("ana");
 			print(c.terms.ToArray());
         }
 		[Test()]
         public void SimpleSpace()
         {
-            TokenizeParcerucene.composer c = new TokenizeParcerucene.composer("ana ramire");
+            composer c = new TokenizeParcerucene.composer("ana ramire");
             print(c.terms.ToArray());
         }
 

@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "replica", "replica\replica.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generador de datos", "Generador de datos\Generador de datos.csproj", "{EC1C6380-0948-47A6-B2E1-0427BF98FA8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenizeParcerucene", "TokenizeParcerucene2\TokenizeParcerucene.csproj", "{32948C12-7A34-4C5E-B59F-3598B2C559CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenizeParcentLucene", "TokenizeParcerucene2\TokenizeParcentLucene.csproj", "{32948C12-7A34-4C5E-B59F-3598B2C559CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateDatabase", "CreateDatabase\CreateDatabase.csproj", "{D678D326-62C1-4427-B7CB-1BF4308B2D26}"
 EndProject

@@ -117,7 +117,7 @@
     </ProjectReference>
     <ProjectReference Include="..\TokenizeParcerucene2\TokenizeParcerucene.csproj">
       <Project>{32948c12-7a34-4c5e-b59f-3598b2c559cc}</Project>
-      <Name>TokenizeParcerucene</Name>
+      <Name>TokenizeParcentLucene</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

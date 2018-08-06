@@ -17,6 +17,7 @@ C:/Users/rafit/Documents/GitHub/SRL/Generador de datos/obj/Debug/Generador de da
 /home/yorb1990/Projects/yorb1990/SRL/Generador de datos/bin/Debug/MySql.Data.dll
 /home/yorb1990/Projects/yorb1990/SRL/Generador de datos/bin/Debug/Google.Protobuf.xml
 /home/yorb1990/Projects/yorb1990/SRL/Generador de datos/bin/Debug/MySql.Data.xml
+/home/yorb1990/Projects/yorb1990/SRL/Generador de datos/obj/Debug/Generador de datos.csprojResolveAssemblyReference.cache
 /home/yorb1990/Projects/yorb1990/SRL/Generador de datos/obj/Debug/Generador de datos.csproj.CoreCompileInputs.cache
 /home/yorb1990/Projects/yorb1990/SRL/Generador de datos/obj/Debug/Generador de datos.exe
 /home/yorb1990/Projects/yorb1990/SRL/Generador de datos/obj/Debug/Generador de datos.pdb

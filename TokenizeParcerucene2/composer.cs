@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace TokenizeParcerucene
+namespace TokenizeParceLucene
 {
     public class composer
     {
         public List<string> terms = new List<string>();
-        private string[] symbols = new string[] {
+        private string[] Similar = new string[] {
             "a|á","e|é","i|í|y|1","o|ó|0","u|ú","q|k","s|z|c","v|b","m|n|ñ","j|y|g","h|[\\?]"
         };
+		private string NormalSearch = @"([']|[0-9]|[a-z]|[A-Z]|[Á]|[Ó],|[Í]|[É]|[Ú]|[Ñ]|[á]|[ó]|[í]|[é]|[ú]|[ñ]|\s){2,50}";
         public composer(string origin)
         {
             tokenizar(origin);
         }
         private void tokenizar(string origins)
         {
+			
             foreach (string origin in Regex.Split(origins.Trim(), @" |,"))
             {
 				if (origin.StartsWith("'"))
@@ -45,7 +47,7 @@ namespace TokenizeParcerucene
             {
                 Boolean pass = true;
                 string word = origin.Substring(i, 1);
-                foreach (string rul in symbols)
+				foreach (string rul in Similar)
                 {
                     Regex rex = new Regex(rul);
                     if (rex.IsMatch(word))
