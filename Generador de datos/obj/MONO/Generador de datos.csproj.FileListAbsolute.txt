@@ -1,0 +1,12 @@
+C:\Users\rafit\Documents\GitHub\SRL\Generador de datos\bin\MONO\Generador de datos.exe.config
+C:\Users\rafit\Documents\GitHub\SRL\Generador de datos\bin\MONO\Generador de datos.exe
+C:\Users\rafit\Documents\GitHub\SRL\Generador de datos\bin\MONO\Generador de datos.pdb
+C:\Users\rafit\Documents\GitHub\SRL\Generador de datos\bin\MONO\Google.Protobuf.dll
+C:\Users\rafit\Documents\GitHub\SRL\Generador de datos\bin\MONO\MySql.Data.dll
+C:\Users\rafit\Documents\GitHub\SRL\Generador de datos\bin\MONO\Google.Protobuf.xml
+C:\Users\rafit\Documents\GitHub\SRL\Generador de datos\bin\MONO\MySql.Data.xml
+C:\Users\rafit\Documents\GitHub\SRL\Generador de datos\obj\MONO\Generador de datos.csprojAssemblyReference.cache
+C:\Users\rafit\Documents\GitHub\SRL\Generador de datos\obj\MONO\Generador de datos.csproj.CoreCompileInputs.cache
+C:\Users\rafit\Documents\GitHub\SRL\Generador de datos\obj\MONO\Generador de datos.csproj.CopyComplete
+C:\Users\rafit\Documents\GitHub\SRL\Generador de datos\obj\MONO\Generador de datos.exe
+C:\Users\rafit\Documents\GitHub\SRL\Generador de datos\obj\MONO\Generador de datos.pdb

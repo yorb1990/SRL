@@ -59,6 +59,16 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MONO|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\MONO\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging, Version=2.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.2.3.1\lib\net40\Common.Logging.dll</HintPath>
@@ -115,7 +125,7 @@
       <Project>{b2f3fa62-54fd-49e8-831f-537416c7b8a4}</Project>
       <Name>replica</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TokenizeParcerucene2\TokenizeParcerucene.csproj">
+    <ProjectReference Include="..\TokenizeParcerucene2\TokenizeParcentLucene.csproj">
       <Project>{32948c12-7a34-4c5e-b59f-3598b2c559cc}</Project>
       <Name>TokenizeParcentLucene</Name>
     </ProjectReference>

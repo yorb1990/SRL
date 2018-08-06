@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -7,7 +7,8 @@
     <OutputType>Library</OutputType>
     <RootNamespace>testunit</RootNamespace>
     <AssemblyName>testunit</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,7 +25,22 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MONO|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\MONO\</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MSTest.TestFramework.1.3.2\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MSTest.TestFramework.1.3.2\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
@@ -38,7 +54,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TokenizeParcerucene2\TokenizeParcerucene.csproj">
+    <ProjectReference Include="..\TokenizeParcerucene2\TokenizeParcentLucene.csproj">
       <Project>{32948C12-7A34-4C5E-B59F-3598B2C559CC}</Project>
       <Name>TokenizeParcentLucene</Name>
     </ProjectReference>

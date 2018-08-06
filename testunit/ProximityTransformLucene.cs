@@ -1,38 +1,54 @@
-﻿using NUnit.Framework;
+﻿#if __MonoCS__
+using NUnit.Framework;
+#else
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 using System;
-
+using System.Diagnostics;
+using TokenizeParceLucene;
 
 namespace testunit
 {
+#if __MonoCS__
     [TestFixture()]
+#else
+    [TestClass]
+    #endif
     public class ProximityTransformLucene
     {
+#if __MonoCS__
         [Test()]
+#else
+        [TestMethod]
+        #endif
         public void Simple()
         {
-			composer c = new TokenizeParcerucene.composer("ana");
+			composer c = new composer("ana");
 			print(c.terms.ToArray());
         }
-		[Test()]
+#if __MonoCS__
+        [Test()]
+#else
+        [TestMethod]
+#endif
         public void SimpleSpace()
         {
-            composer c = new TokenizeParcerucene.composer("ana ramire");
+            composer c = new composer("ana ramire");
             print(c.terms.ToArray());
         }
-
 		private void print(object obj)
         {
             if (obj is System.Array)
             {
-				Console.WriteLine(((Array)obj).Length);
+                Debug.WriteLine(((Array)obj).Length);
                 foreach (var token in (Array)obj)
                 {
-                    Console.WriteLine(token);
+                    Debug.WriteLine(token);
                 }
             }
             else
             {
-                Console.WriteLine(obj);
+                Debug.WriteLine(obj);
             }
         }
     }

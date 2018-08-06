@@ -1,0 +1,11 @@
+C:\Users\rafit\Documents\GitHub\SRL\testunit\obj\Debug\testunit.csprojAssemblyReference.cache
+C:\Users\rafit\Documents\GitHub\SRL\testunit\obj\Debug\testunit.csproj.CoreCompileInputs.cache
+C:\Users\rafit\Documents\GitHub\SRL\testunit\bin\Debug\testunit.dll
+C:\Users\rafit\Documents\GitHub\SRL\testunit\bin\Debug\testunit.pdb
+C:\Users\rafit\Documents\GitHub\SRL\testunit\bin\Debug\nunit.framework.dll
+C:\Users\rafit\Documents\GitHub\SRL\testunit\bin\Debug\TokenizeParcerucene.dll
+C:\Users\rafit\Documents\GitHub\SRL\testunit\bin\Debug\TokenizeParcerucene.pdb
+C:\Users\rafit\Documents\GitHub\SRL\testunit\bin\Debug\nunit.framework.xml
+C:\Users\rafit\Documents\GitHub\SRL\testunit\obj\Debug\testunit.csproj.CopyComplete
+C:\Users\rafit\Documents\GitHub\SRL\testunit\obj\Debug\testunit.dll
+C:\Users\rafit\Documents\GitHub\SRL\testunit\obj\Debug\testunit.pdb

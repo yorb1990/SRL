@@ -1,0 +1,6 @@
+C:\Users\rafit\Documents\GitHub\SRL\TokenizeParcerucene2\bin\MONO\TokenizeParcerucene.dll
+C:\Users\rafit\Documents\GitHub\SRL\TokenizeParcerucene2\bin\MONO\TokenizeParcerucene.pdb
+C:\Users\rafit\Documents\GitHub\SRL\TokenizeParcerucene2\obj\MONO\TokenizeParcentLucene.csprojAssemblyReference.cache
+C:\Users\rafit\Documents\GitHub\SRL\TokenizeParcerucene2\obj\MONO\TokenizeParcentLucene.csproj.CoreCompileInputs.cache
+C:\Users\rafit\Documents\GitHub\SRL\TokenizeParcerucene2\obj\MONO\TokenizeParcerucene.dll
+C:\Users\rafit\Documents\GitHub\SRL\TokenizeParcerucene2\obj\MONO\TokenizeParcerucene.pdb

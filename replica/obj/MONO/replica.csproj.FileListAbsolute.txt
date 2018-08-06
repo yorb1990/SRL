@@ -1,0 +1,17 @@
+C:\Users\rafit\Documents\GitHub\SRL\replica\bin\MONO\replica.dll
+C:\Users\rafit\Documents\GitHub\SRL\replica\bin\MONO\replica.pdb
+C:\Users\rafit\Documents\GitHub\SRL\replica\bin\MONO\Google.Protobuf.dll
+C:\Users\rafit\Documents\GitHub\SRL\replica\bin\MONO\ICSharpCode.SharpZipLib.dll
+C:\Users\rafit\Documents\GitHub\SRL\replica\bin\MONO\INIFileParser.dll
+C:\Users\rafit\Documents\GitHub\SRL\replica\bin\MONO\Lucene.Net.dll
+C:\Users\rafit\Documents\GitHub\SRL\replica\bin\MONO\MySql.Data.dll
+C:\Users\rafit\Documents\GitHub\SRL\replica\bin\MONO\Google.Protobuf.xml
+C:\Users\rafit\Documents\GitHub\SRL\replica\bin\MONO\INIFileParser.xml
+C:\Users\rafit\Documents\GitHub\SRL\replica\bin\MONO\Lucene.Net.pdb
+C:\Users\rafit\Documents\GitHub\SRL\replica\bin\MONO\Lucene.Net.xml
+C:\Users\rafit\Documents\GitHub\SRL\replica\bin\MONO\MySql.Data.xml
+C:\Users\rafit\Documents\GitHub\SRL\replica\obj\MONO\replica.csprojAssemblyReference.cache
+C:\Users\rafit\Documents\GitHub\SRL\replica\obj\MONO\replica.csproj.CoreCompileInputs.cache
+C:\Users\rafit\Documents\GitHub\SRL\replica\obj\MONO\replica.csproj.CopyComplete
+C:\Users\rafit\Documents\GitHub\SRL\replica\obj\MONO\replica.dll
+C:\Users\rafit\Documents\GitHub\SRL\replica\obj\MONO\replica.pdb
